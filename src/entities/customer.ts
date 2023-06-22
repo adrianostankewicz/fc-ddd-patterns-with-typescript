@@ -1,15 +1,17 @@
 import Address from "./address";
 
-class Customer {
+export default class Customer {
 
-  _id: string;
-  _name: string = "";
-  _address!: Address;
-  _active: boolean = true;
+  private _id: string;
+  private _name: string = "";
+  private _address!: Address;
+  private _active: boolean = false;
 
   constructor(id: string, name: string){
     this._id = id;
     this._name = name;
+
+    this.validate();
   }
 
   validate(){
@@ -20,7 +22,20 @@ class Customer {
       throw new Error('Name is required');
     }
   }
+  
+  get name() : string {
+    return this._name;
+  }
 
+  changeName(name: string){
+    this._name = name;
+    this.validate();
+  }
+
+  isActive(): boolean {
+    return this._active;
+  }
+  
   activate(){
     if(this._address === undefined){
       throw new Error("Address is mandatory to activate a customer");
@@ -32,7 +47,7 @@ class Customer {
     this._active = false;
   }
 
-  setAddress(address: Address){
+  set Address(address: Address){
     this._address = address;
   }
 }
